@@ -3,6 +3,11 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --pixel-ink: #111111;
+  --pixel-cream: #fff7d6;
+  --pixel-sky: #a8ddff;
+  --pixel-grass: #54c45e;
+  --pixel-brick: #d56a4a;
 }
 
 @theme inline {
@@ -10,12 +15,15 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-pixel: var(--font-pixel);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+    --pixel-ink: #e9e9e9;
+    --pixel-cream: #141414;
   }
 }
 
@@ -23,4 +31,45 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* 像素风 UI 基础积木 */
+.pixel-bg {
+  background:
+    linear-gradient(to bottom, color-mix(in oklab, var(--pixel-sky) 92%, white 8%), var(--pixel-sky) 55%, color-mix(in oklab, var(--pixel-grass) 92%, black 8%) 55%, var(--pixel-grass) 100%),
+    repeating-linear-gradient(
+      90deg,
+      color-mix(in oklab, white 12%, transparent) 0px,
+      color-mix(in oklab, white 12%, transparent) 2px,
+      transparent 2px,
+      transparent 8px
+    );
+}
+
+.pixel-panel {
+  background: var(--pixel-cream);
+  border: 4px solid var(--pixel-ink);
+  box-shadow: 8px 8px 0 0 var(--pixel-ink);
+}
+
+.pixel-btn {
+  border: 4px solid var(--pixel-ink);
+  box-shadow: 4px 4px 0 0 var(--pixel-ink);
+  transform: translate(0, 0);
+}
+.pixel-btn:active {
+  box-shadow: 2px 2px 0 0 var(--pixel-ink);
+  transform: translate(2px, 2px);
+}
+
+.pixel-focus:focus-visible {
+  outline: 4px solid color-mix(in oklab, var(--pixel-ink) 65%, #ffea00 35%);
+  outline-offset: 3px;
+}
+
+.pixel-title {
+  font-family: var(--font-pixel), ui-monospace, SFMono-Regular, Menlo, Monaco,
+    Consolas, "Liberation Mono", "Courier New", monospace;
+  letter-spacing: 0.02em;
+  text-shadow: 2px 2px 0 color-mix(in oklab, var(--pixel-ink) 45%, transparent);
 }
