@@ -60,6 +60,23 @@ function extFromMime(mime: string) {
   }
 }
 
+// 智能截断文件名的工具函数
+// 保留开头8个字符 + 拓展名，中间用...替代
+function truncateFileName(fileName: string, keepStartLength = 8) {
+  // 分离文件名和拓展名
+  const dotIndex = fileName.lastIndexOf(".");
+  const name = dotIndex > -1 ? fileName.slice(0, dotIndex - 1) : fileName;
+  const ext = dotIndex > -1 ? fileName.slice(dotIndex - 1) : "";
+
+  // 如果文件名长度小于等于保留长度，直接返回
+  if (name.length <= keepStartLength) {
+    return fileName;
+  }
+
+  // 截断中间部分，保留开头 + ... + 拓展名
+  return `${name.slice(0, keepStartLength)}...${ext}`;
+}
+
 async function decodeImage(file: File) {
   // createImageBitmap 更快；失败则回退到 HTMLImageElement
   if ("createImageBitmap" in window) {
@@ -571,8 +588,9 @@ export default function Home() {
                     >
                       <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
                         <div className="min-w-0">
-                          <div className="pixel-title mb-1 truncate text-sm text-[var(--pixel-ink)]">
-                            {it.file.name}
+                          {/* 关键修改：替换为Tailwind类名，移除内联样式 */}
+                          <div className="pixel-title mb-1 truncate text-sm text-[var(--pixel-ink)] w-full whitespace-nowrap overflow-hidden text-ellipsis">
+                            {truncateFileName(it.file.name)}
                           </div>
                           <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-[var(--pixel-ink)] opacity-80">
                             <span>原始：{formatBytes(it.originalBytes)}</span>
