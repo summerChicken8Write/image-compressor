@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Press_Start_2P } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next"
 import { SpeedInsights } from "@vercel/speed-insights/next"
@@ -20,9 +20,26 @@ const pressStart2P = Press_Start_2P({
   subsets: ["latin"],
 });
 
+const APP_NAME = "像素图片压缩器";
+const APP_DESCRIPTION = "纯前端批量压缩图片，压缩后可下载。";
+
 export const metadata: Metadata = {
-  title: "像素图片压缩器",
-  description: "纯前端批量压缩图片，压缩后可下载。",
+  title: APP_NAME,
+  description: APP_DESCRIPTION,
+  applicationName: APP_NAME,
+  manifest: "/manifest.json",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: APP_NAME,
+  },
+  formatDetection: {
+    telephone: false,
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#0a0a0a",
 };
 
 export default function RootLayout({
